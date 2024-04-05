@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 import time as t
-import nfl_api_parser as nflparser
+import data.nfl_api_parser as nflparser
 import debug
 
 NETWORK_RETRY_SLEEP_TIME = 10.0
@@ -76,6 +76,7 @@ class Data:
         return gametime
 
     def current_game(self):
+        print(self)
         return self.games[self.current_game_index]
 
     # def update_scores(self, homescore, awayscore):

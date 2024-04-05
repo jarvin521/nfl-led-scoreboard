@@ -1,5 +1,6 @@
 from PIL import Image, ImageFont, ImageDraw, ImageSequence
-from rgbmatrix import graphics
+#from rgbmatrix import graphics
+from RGBMatrixEmulator import RGBMatrix, RGBMatrixOptions, graphics
 from utils import center_text
 from calendar import month_abbr
 from renderer.screen_config import screenConfig
@@ -48,7 +49,6 @@ class MainRenderer:
             rotate_rate = self.__rotate_rate_for_game(self.data.current_game())
 
             # If we're ready to rotate, let's do it
-            # fix this u idiot
             if time_delta >= rotate_rate:
                 self.starttime = t.time()
                 self.data.needs_refresh = True
@@ -92,12 +92,9 @@ class MainRenderer:
     def __draw_game(self, game):
         time = self.data.get_current_date()
         gametime = datetime.strptime(game['date'], "%Y-%m-%dT%H:%MZ")
-        if time < gametime - timedelta(hours=1) and game['state'] == 'pre':
+        if time < gametime and game['state'] == 'pre':
             debug.info('Pre-Game State')
             self._draw_pregame(game)
-        elif time < gametime and game['state'] == 'pre':
-            debug.info('Countdown til gametime')
-            self._draw_countdown(game)
         elif game['state'] == 'post':
             debug.info('Final State')
             self._draw_post_game(game)
@@ -115,8 +112,8 @@ class MainRenderer:
                 date_text = gamedatetime.strftime('%A %-d %b').upper()
             gametime = gamedatetime.strftime("%-I:%M %p")
             # Center the game time on screen.                
-            date_pos = center_text(self.font_mini.getsize(date_text)[0], 32)
-            gametime_pos = center_text(self.font_mini.getsize(gametime)[0], 32)
+            date_pos = center_text(self.font_mini.getbbox(date_text)[0], 32)
+            gametime_pos = center_text(self.font_mini.getbbox(gametime)[0], 32)
             # Draw the text on the Data image.
             self.draw.text((date_pos, 0), date_text, font=self.font_mini)
             self.draw.multiline_text((gametime_pos, 6), gametime, fill=(255, 255, 255), font=self.font_mini, align="center")
@@ -222,27 +219,29 @@ class MainRenderer:
             self._draw_fg()
         # Prepare the data
         # score = '{}-{}'.format(overview['awayscore'], overview['homescore'])
-        if game['possession'] == game['awayid']:
-            pos = game['awayteam']
-        else:
-            pos = game['hometeam']
         quarter = str(game['quarter'])
-        time_period = game['time']
-        # this is ugly but I want to replace the possession info with down info and spot info
-        down = None
-        spot = None
-        game_info = None
-        if game['down']:
-            down = re.sub(r"[a-z]+", "", game['down']).replace(" ", "")
-            info_pos = center_text(self.font_mini.getsize(str(down))[0], 32)
-            self.draw.multiline_text((info_pos, 19), str(down), fill=(255, 255, 255), font=self.font_mini, align="center")
-        if game['spot']:
-            spot = game['spot'].replace(" ", "")
-            info_pos = center_text(self.font_mini.getsize(spot)[0], 32)
-            self.draw.multiline_text((info_pos, 25), spot, fill=(255, 255, 255), font=self.font_mini, align="center")
-        pos_colour = (255, 255, 255)
-        if game['redzone']:
-            pos_colour = (255, 25, 25)
+        if game['league'] != 'mlb':
+            time_period = game['time']
+        if game['league'] == 'nfl' or game['ncaaf']:
+            if game['possession'] == game['awayid']:
+                pos = game['awayteam']
+            else:
+                pos = game['hometeam']
+                # this is ugly but I want to replace the possession info with down info and spot info
+            down = None
+            spot = None
+            game_info = None
+            if game['down']:
+                down = re.sub(r"[a-z]+", "", game['down']).replace(" ", "")
+                info_pos = center_text(self.font_mini.getsize(str(down))[0], 32)
+                self.draw.multiline_text((info_pos, 19), str(down), fill=(255, 255, 255), font=self.font_mini, align="center")
+            if game['spot']:
+                spot = game['spot'].replace(" ", "")
+                info_pos = center_text(self.font_mini.getsize(spot)[0], 32)
+                self.draw.multiline_text((info_pos, 25), spot, fill=(255, 255, 255), font=self.font_mini, align="center")
+            pos_colour = (255, 255, 255)
+            if game['redzone']:
+                pos_colour = (255, 25, 25)
         # Set the position of the information on screen.
         homescore = '{0:02d}'.format(homescore)
         awayscore = '{0:02d}'.format(awayscore)
@@ -309,7 +308,7 @@ class MainRenderer:
         # Prepare the data
         score = '{}-{}'.format(game['awayscore'], game['homescore'])
         # Set the position of the information on screen.
-        score_position = center_text(self.font.getsize(score)[0], 32)
+        score_position = center_text(self.font.getbox(score)[0], 32)
         # Draw the text on the Data image.
         self.draw.multiline_text((score_position, 19), score, fill=(255, 255, 255), font=self.font, align="center")
         self.draw.multiline_text((26, 0), "END", fill=(255, 255, 255), font=self.font_mini,align="center")

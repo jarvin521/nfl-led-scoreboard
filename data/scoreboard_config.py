@@ -4,7 +4,7 @@ import os
 
 DEFAULT_PREFERRED_TEAMS = ["BUF", "NO"]
 DEFAULT_SCROLLING_SPEED = 2
-DEFAULT_ROTATE_RATE = 15.0
+DEFAULT_ROTATE_RATE = 5.0
 MINIMUM_ROTATE_RATE = 2.0
 DEFAULT_ROTATE_RATES = {"live": DEFAULT_ROTATE_RATE, "final": DEFAULT_ROTATE_RATE, "pregame": DEFAULT_ROTATE_RATE}
 
@@ -30,16 +30,16 @@ class ScoreboardConfig:
         self.debug = json["debug"]
 
         # Check if these are lists or strings
-        self.check_preferred_teams()
+        # self.check_preferred_teams()
         self.check_rotate_rates()
 
-    def check_preferred_teams(self):
-        if not isinstance(self.preferred_teams, str) and not isinstance(self.preferred_teams, list):
-            debug.warning("preferred_teams should be an array of team names or a single team name string. Using default preferred_teams, {}".format(DEFAULT_PREFERRED_TEAMS))
-            self.preferred_teams = DEFAULT_PREFERRED_TEAMS
-        if isinstance(self.preferred_teams, str):
-            team = self.preferred_teams
-            self.preferred_teams = [team]
+    # def check_preferred_teams(self):
+    #     if not isinstance(self.preferred_teams, str) and not isinstance(self.preferred_teams, list):
+    #         debug.warning("preferred_teams should be an array of team names or a single team name string. Using default preferred_teams, {}".format(DEFAULT_PREFERRED_TEAMS))
+    #         self.preferred_teams = DEFAULT_PREFERRED_TEAMS
+    #     if isinstance(self.preferred_teams, str):
+    #         team = self.preferred_teams
+    #         self.preferred_teams = [team]
 
     def check_rotate_rates(self):
         if isinstance(self.rotation_rates, dict) == False:
