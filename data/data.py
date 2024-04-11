@@ -76,7 +76,6 @@ class Data:
         return gametime
 
     def current_game(self):
-        print(self)
         return self.games[self.current_game_index]
 
     # def update_scores(self, homescore, awayscore):
