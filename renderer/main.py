@@ -129,12 +129,12 @@ class MainRenderer:
             self.canvas.SetImage(self.image, 0, 0)
             
             # TEMP Open the logo image file
-            away_team_logo = Image.open('logos/{}/{}.png'.format(game['league'], game['awayteam'])).resize((20, 20), Image.BOX)
-            home_team_logo = Image.open('logos/{}/{}.png'.format(game['league'], game['hometeam'])).resize((20, 20), Image.BOX)
+            away_team_logo = Image.open('logos/{}/{}.png'.format(game['league'], game['awayteam'])).resize((16, 16), Image.BOX)
+            home_team_logo = Image.open('logos/{}/{}.png'.format(game['league'], game['hometeam'])).resize((16, 16), Image.BOX)
             
             # Put the images on the canvas
-            self.canvas.SetImage(away_team_logo.convert("RGB"), 1, 12)
-            self.canvas.SetImage(home_team_logo.convert("RGB"), 43, 12)
+            self.canvas.SetImage(away_team_logo.convert("RGB"), 2, 14)
+            self.canvas.SetImage(home_team_logo.convert("RGB"), 45, 14)
 
             # Load the canvas on screen.
             self.canvas = self.matrix.SwapOnVSync(self.canvas)
@@ -203,12 +203,12 @@ class MainRenderer:
         self.canvas.SetImage(self.image, 0, 0)
         
         # TEMP Open the logo image file
-        away_team_logo = Image.open('logos/{}/{}.png'.format(game['league'], game['awayteam'])).resize((20, 20), Image.BOX)
-        home_team_logo = Image.open('logos/{}/{}.png'.format(game['league'], game['hometeam'])).resize((20, 20), Image.BOX)
+        away_team_logo = Image.open('logos/{}/{}.png'.format(game['league'], game['awayteam'])).resize((16, 16), Image.BOX)
+        home_team_logo = Image.open('logos/{}/{}.png'.format(game['league'], game['hometeam'])).resize((16, 16), Image.BOX)
         
         # Put the images on the canvas
-        self.canvas.SetImage(away_team_logo.convert("RGB"), 1, 0)
-        self.canvas.SetImage(home_team_logo.convert("RGB"), 43, 0)
+        self.canvas.SetImage(away_team_logo.convert("RGB"), 2, 0)
+        self.canvas.SetImage(home_team_logo.convert("RGB"), 45, 0)
         
         # Load the canvas on screen.
         self.canvas = self.matrix.SwapOnVSync(self.canvas)
@@ -230,14 +230,14 @@ class MainRenderer:
         self.canvas.SetImage(self.image, 0, 0)
 
         # TEMP Open the logo image file
-        away_team_logo = Image.open('logos/{}/{}.png'.format(game['league'], game['awayteam'])).resize((20, 20), Image.BOX)
-        home_team_logo = Image.open('logos/{}/{}.png'.format(game['league'], game['hometeam'])).resize((20, 20), Image.BOX)
+        away_team_logo = Image.open('logos/{}/{}.png'.format(game['league'], game['awayteam'])).resize((16, 16), Image.BOX)
+        home_team_logo = Image.open('logos/{}/{}.png'.format(game['league'], game['hometeam'])).resize((16, 16), Image.BOX)
         rain = Image.open('logos/rain.bmp').resize((16, 16), Image.BOX)
         
         # Put the images on the canvas
         self.canvas.SetImage(rain.convert("RGB"), 24, 12)
-        self.canvas.SetImage(away_team_logo.convert("RGB"), 1, 7)
-        self.canvas.SetImage(home_team_logo.convert("RGB"), 43, 7)
+        self.canvas.SetImage(away_team_logo.convert("RGB"), 2, 7)
+        self.canvas.SetImage(home_team_logo.convert("RGB"), 45, 7)
        
         # Load the canvas on screen.
         self.canvas = self.matrix.SwapOnVSync(self.canvas)
@@ -258,12 +258,12 @@ class MainRenderer:
         self.canvas.SetImage(self.image, 0, 0)
 
         # TEMP Open the logo image file
-        away_team_logo = Image.open('logos/{}/{}.png'.format(game['league'], game['awayteam'])).resize((20, 20), Image.BOX)
-        home_team_logo = Image.open('logos/{}/{}.png'.format(game['league'], game['hometeam'])).resize((20, 20), Image.BOX)
+        away_team_logo = Image.open('logos/{}/{}.png'.format(game['league'], game['awayteam'])).resize((16, 16), Image.BOX)
+        home_team_logo = Image.open('logos/{}/{}.png'.format(game['league'], game['hometeam'])).resize((16, 16), Image.BOX)
         
         # Put the images on the canvas
-        self.canvas.SetImage(away_team_logo.convert("RGB"), 1, 2)
-        self.canvas.SetImage(home_team_logo.convert("RGB"), 43, 2)
+        self.canvas.SetImage(away_team_logo.convert("RGB"), 2, 2)
+        self.canvas.SetImage(home_team_logo.convert("RGB"), 45, 2)
 
         # Load the canvas on screen.
         self.canvas = self.matrix.SwapOnVSync(self.canvas)
