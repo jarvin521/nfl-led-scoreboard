@@ -25,7 +25,6 @@ class MainRenderer:
         # Load the fonts
         self.font = ImageFont.truetype("fonts/score_large.otf", 16)
         self.font_mini = ImageFont.truetype("fonts/04B_03B_.TTF", 8)
-        self.font_micro = ImageFont.truetype("fonts/04B_03B_.TTF", 8)
 
     def render(self):
         while True:
@@ -130,8 +129,8 @@ class MainRenderer:
             self.canvas.SetImage(self.image, 0, 0)
             
             # TEMP Open the logo image file
-            away_team_logo = Image.open('logos/{}/{}.bmp'.format(game['league'], game['awayteam'])).resize((20, 20), Image.BOX)
-            home_team_logo = Image.open('logos/{}/{}.bmp'.format(game['league'], game['hometeam'])).resize((20, 20), Image.BOX)
+            away_team_logo = Image.open('logos/{}/{}.png'.format(game['league'], game['awayteam'])).resize((20, 20), Image.BOX)
+            home_team_logo = Image.open('logos/{}/{}.png'.format(game['league'], game['hometeam'])).resize((20, 20), Image.BOX)
             
             # Put the images on the canvas
             self.canvas.SetImage(away_team_logo.convert("RGB"), 1, 12)
@@ -185,9 +184,9 @@ class MainRenderer:
             balls = f"B {game['balls']}"
             strikes = f"S {game['strikes']}"
             outs = f"O {game['outs']}" 
-            self.draw.multiline_text((center_text(self.font_mini.getbbox(balls)[2], 32), 12), balls, fill=(255, 255, 255), font=self.font_micro, align="center")  
-            self.draw.multiline_text((center_text(self.font_mini.getbbox(strikes)[2], 32), 18), strikes, fill=(255, 255, 255), font=self.font_micro, align="center")
-            self.draw.multiline_text((center_text(self.font_mini.getbbox(outs)[2], 32), 24), outs, fill=(255, 255, 255), font=self.font_micro, align="center")
+            self.draw.multiline_text((center_text(self.font_mini.getbbox(balls)[2], 32), 12), balls, fill=(255, 255, 255), font=self.font_mini, align="center")  
+            self.draw.multiline_text((center_text(self.font_mini.getbbox(strikes)[2], 32), 18), strikes, fill=(255, 255, 255), font=self.font_mini, align="center")
+            self.draw.multiline_text((center_text(self.font_mini.getbbox(outs)[2], 32), 24), outs, fill=(255, 255, 255), font=self.font_mini, align="center")
         elif game['league'] == 'nfl' or game['league'] == 'ncaa':
             info_pos = center_text(self.font_mini.getbbox(pos)[2], 32)
             self.draw.multiline_text((info_pos, 13), pos, fill=pos_colour, font=self.font_mini, align="center")
@@ -204,8 +203,8 @@ class MainRenderer:
         self.canvas.SetImage(self.image, 0, 0)
         
         # TEMP Open the logo image file
-        away_team_logo = Image.open('logos/{}/{}.bmp'.format(game['league'], game['awayteam'])).resize((18, 18), Image.BOX)
-        home_team_logo = Image.open('logos/{}/{}.bmp'.format(game['league'], game['hometeam'])).resize((18, 18), Image.BOX)
+        away_team_logo = Image.open('logos/{}/{}.png'.format(game['league'], game['awayteam'])).resize((20, 20), Image.BOX)
+        home_team_logo = Image.open('logos/{}/{}.png'.format(game['league'], game['hometeam'])).resize((20, 20), Image.BOX)
         
         # Put the images on the canvas
         self.canvas.SetImage(away_team_logo.convert("RGB"), 1, 0)
@@ -231,8 +230,8 @@ class MainRenderer:
         self.canvas.SetImage(self.image, 0, 0)
 
         # TEMP Open the logo image file
-        away_team_logo = Image.open('logos/{}/{}.bmp'.format(game['league'], game['awayteam'])).resize((20, 20), Image.BOX)
-        home_team_logo = Image.open('logos/{}/{}.bmp'.format(game['league'], game['hometeam'])).resize((20, 20), Image.BOX)
+        away_team_logo = Image.open('logos/{}/{}.png'.format(game['league'], game['awayteam'])).resize((20, 20), Image.BOX)
+        home_team_logo = Image.open('logos/{}/{}.png'.format(game['league'], game['hometeam'])).resize((20, 20), Image.BOX)
         rain = Image.open('logos/rain.bmp').resize((16, 16), Image.BOX)
         
         # Put the images on the canvas
@@ -259,8 +258,8 @@ class MainRenderer:
         self.canvas.SetImage(self.image, 0, 0)
 
         # TEMP Open the logo image file
-        away_team_logo = Image.open('logos/{}/{}.bmp'.format(game['league'], game['awayteam'])).resize((20, 20), Image.BOX)
-        home_team_logo = Image.open('logos/{}/{}.bmp'.format(game['league'], game['hometeam'])).resize((20, 20), Image.BOX)
+        away_team_logo = Image.open('logos/{}/{}.png'.format(game['league'], game['awayteam'])).resize((20, 20), Image.BOX)
+        home_team_logo = Image.open('logos/{}/{}.png'.format(game['league'], game['hometeam'])).resize((20, 20), Image.BOX)
         
         # Put the images on the canvas
         self.canvas.SetImage(away_team_logo.convert("RGB"), 1, 2)

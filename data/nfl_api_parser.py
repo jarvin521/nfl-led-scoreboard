@@ -6,7 +6,7 @@ import time as t
 URLs = ["http://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard", "http://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/scoreboard", \
     "http://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard", "http://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard", "http://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard" ]
 
-URLs = ["http://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard"]
+# URLs = ["http://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard"]
 # def get_game(team_name):
 #     for i in range(5):
 #         try:
