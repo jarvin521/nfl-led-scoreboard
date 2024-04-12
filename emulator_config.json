@@ -1,6 +1,6 @@
 {
     "pixel_outline": 0,
-    "pixel_size": 16,
+    "pixel_size": 13,
     "pixel_style": "circle",
     "display_adapter": "pygame",
     "suppress_font_warnings": false,

@@ -6,8 +6,7 @@ import time as t
 URLs = ["http://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard", "http://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/scoreboard", \
     "http://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard", "http://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard", "http://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard" ]
 
-URLs = ["http://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard", "http://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard"]
-
+URLs = ["http://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard"]
 # def get_game(team_name):
 #     for i in range(5):
 #         try:
@@ -51,7 +50,8 @@ def get_all_games():
                             'awayteam': info['competitors'][1]['team']['abbreviation'], 'awayid': info['competitors'][1]['id'], 'awayscore': int(info['competitors'][1]['score']),
                             'down': info.get('situation', {}).get('shortDownDistanceText'), 'spot': info.get('situation', {}).get('possessionText'),
                             'time': info['status']['displayClock'], 'quarter': info['status']['period'], 'over': info['status']['type']['completed'],
-                            'redzone': info.get('situation', {}).get('isRedZone'), 'possession': info.get('situation', {}).get('possession'), 'state': info['status']['type']['state']}
+                            'redzone': info.get('situation', {}).get('isRedZone'), 'possession': info.get('situation', {}).get('possession'),
+                            'state': info['status']['type']['state'], 'stateDetail': info['status']['type']['shortDetail']}
                         if odds: 
                             game['overUnder'] = odds.get('overUnder')
                             game['spread'] = odds.get('spread')
@@ -61,12 +61,13 @@ def get_all_games():
                         games.append(game)
                 if "college-football" in URL: 
                     if "Kentucky Wildcats" in g['name']:    
-                        game = {'name': g['shortName'], 'date': g['date'], 'league': 'ncaaf',
+                        game = {'name': g['shortName'], 'date': g['date'], 'league': 'ncaa',
                             'hometeam': info['competitors'][0]['team']['abbreviation'], 'homeid': info['competitors'][0]['id'], 'homescore': int(info['competitors'][0]['score']),
                             'awayteam': info['competitors'][1]['team']['abbreviation'], 'awayid': info['competitors'][1]['id'], 'awayscore': int(info['competitors'][1]['score']),
                             'down': info.get('situation', {}).get('shortDownDistanceText'), 'spot': info.get('situation', {}).get('possessionText'),
                             'time': info['status']['displayClock'], 'quarter': info['status']['period'], 'over': info['status']['type']['completed'],
-                            'redzone': info.get('situation', {}).get('isRedZone'), 'possession': info.get('situation', {}).get('possession'), 'state': info['status']['type']['state'],}
+                            'redzone': info.get('situation', {}).get('isRedZone'), 'possession': info.get('situation', {}).get('possession'), 
+                            'state': info['status']['type']['state'], 'stateDetail': info['status']['type']['shortDetail']}
                         if odds: 
                             game['overUnder'] = odds.get('overUnder')
                             game['spread'] = odds.get('spread')
@@ -79,22 +80,22 @@ def get_all_games():
                         game = {'name': g['shortName'], 'date': g['date'], 'league': 'nba',
                             'hometeam': info['competitors'][0]['team']['abbreviation'], 'homeid': info['competitors'][0]['id'], 'homescore': int(info['competitors'][0]['score']),
                             'awayteam': info['competitors'][1]['team']['abbreviation'], 'awayid': info['competitors'][1]['id'], 'awayscore': int(info['competitors'][1]['score']),
-                            'time': info['status']['displayClock'], 'quarter': info['status']['period'], 'over': info['status']['type']['completed'],'state': info['status']['type']['state'],}
+                            'time': info['status']['displayClock'], 'quarter': info['status']['period'], 'over': info['status']['type']['completed'],
+                            'state': info['status']['type']['state'], 'stateDetail': info['status']['type']['shortDetail']}
                         if odds: 
                             game['overUnder'] = odds.get('overUnder')
                             game['spread'] = odds.get('spread')
-                            print("we have odds")
                         else:
                             game['overUnder'] = None
                             game['spread'] = None
-                            print("NO ODDS")
                         games.append(game)
                 if "mens-college-basketball" in URL:
                     if "Kentucky Wildcats" in g['name']:                     
-                        game = {'name': g['shortName'], 'date': g['date'], 'league': 'ncaam', 
+                        game = {'name': g['shortName'], 'date': g['date'], 'league': 'ncaa', 
                             'hometeam': info['competitors'][0]['team']['abbreviation'], 'homeid': info['competitors'][0]['id'], 'homescore': int(info['competitors'][0]['score']),
                             'awayteam': info['competitors'][1]['team']['abbreviation'], 'awayid': info['competitors'][1]['id'], 'awayscore': int(info['competitors'][1]['score']),
-                            'time': info['status']['displayClock'], 'quarter': info['status']['period'], 'over': info['status']['type']['completed'],'state': info['status']['type']['state'],}
+                            'time': info['status']['displayClock'], 'quarter': info['status']['period'], 'over': info['status']['type']['completed'],
+                            'state': info['status']['type']['state'], 'stateDetail': info['status']['type']['shortDetail']}
                         if odds: 
                             game['overUnder'] = odds.get('overUnder')
                             game['spread'] = odds.get('spread')
@@ -103,12 +104,12 @@ def get_all_games():
                             game['spread'] = None
                         games.append(game)
                 if "mlb" in URL:
-                    if " " in g['name']: #"Cincinnati Reds" in g['name'] or or "Minnesota Twins" in g['name'] 
+                    if "Cincinnati Reds" in g['name']: # or "" in g['name']:
                         game = {'name': g['shortName'], 'date': g['date'], 'league': 'mlb',
                             'hometeam': info['competitors'][0]['team']['abbreviation'], 'homeid': info['competitors'][0]['id'], 'homescore': int(info['competitors'][0]['score']),
                             'awayteam': info['competitors'][1]['team']['abbreviation'], 'awayid': info['competitors'][1]['id'], 'awayscore': int(info['competitors'][1]['score']),
                             'quarter': info['status']['period'], 'balls': info.get('situation', {}).get('balls'), 'strikes': info.get('situation', {}).get('strikes'), 'outs': info.get('situation', {}).get('outs'),
-                            'over': info['status']['type']['completed'],'state': info['status']['type']['state']}
+                            'over': info['status']['type']['completed'],'state': info['status']['type']['state'], 'stateDetail': info['status']['type']['shortDetail']}
                         if odds: 
                             game['overUnder'] = odds.get('overUnder')
                             game['spread'] = odds.get('spread')
@@ -117,7 +118,7 @@ def get_all_games():
                             game['spread'] = None
                         games.append(game)
                     # i += 1
-                return games
+        return games
     except requests.exceptions.RequestException as e:
         print("Error encountered getting game info, can't hit ESPN api, retrying")
         # if i < 4:

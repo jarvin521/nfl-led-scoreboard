@@ -7,7 +7,7 @@ from utils import args, led_matrix_options
 from data.data import Data
 import debug
 
-SCRIPT_NAME = "NFL Scoreboard"
+SCRIPT_NAME = "All Sports Scoreboard"
 SCRIPT_VERSION = "1.0.0"
 
 # Get supplied command line arguments
