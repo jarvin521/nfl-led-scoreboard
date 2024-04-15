@@ -3,9 +3,10 @@ import datetime
 import time as t
 #from utils import convert_time
 
-URLs = ["http://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard", "http://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/scoreboard", \
+URLs = ["http://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard", "http://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/scoreboard", "http://site.api.espn.com/apis/site/v2/sports/hockey/nhl/scoreboard", \
     "http://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard", "http://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard", "http://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard" ]
 
+#URLs = ["http://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard"]
 def get_all_games():
     # for i in range(5):
     try:
@@ -34,7 +35,7 @@ def get_all_games():
                             game['spread'] = None
                         games.append(game)
                 if "college-football" in URL: 
-                    if "Kentucky Wildcats" in g['name']:    
+                    if "Kentucky Wildcats" in g['name'] or "Minnesota" in g['name']:    
                         game = {'name': g['shortName'], 'date': g['date'], 'league': 'ncaa',
                             'hometeam': info['competitors'][0]['team']['abbreviation'], 'homeid': info['competitors'][0]['id'], 'homescore': int(info['competitors'][0]['score']),
                             'awayteam': info['competitors'][1]['team']['abbreviation'], 'awayid': info['competitors'][1]['id'], 'awayscore': int(info['competitors'][1]['score']),
@@ -50,7 +51,7 @@ def get_all_games():
                             game['spread'] = None
                         games.append(game)
                 if "nba" in URL:
-                    if "Minnesota Timberwolves" in g['name']:                       
+                    if " " in g['name']:                       
                         game = {'name': g['shortName'], 'date': g['date'], 'league': 'nba',
                             'hometeam': info['competitors'][0]['team']['abbreviation'], 'homeid': info['competitors'][0]['id'], 'homescore': int(info['competitors'][0]['score']),
                             'awayteam': info['competitors'][1]['team']['abbreviation'], 'awayid': info['competitors'][1]['id'], 'awayscore': int(info['competitors'][1]['score']),
@@ -64,7 +65,7 @@ def get_all_games():
                             game['spread'] = None
                         games.append(game)
                 if "mens-college-basketball" in URL:
-                    if "Kentucky Wildcats" in g['name']:                     
+                    if "Kentucky Wildcats" in g['name']: # or " " in g['name']:                     
                         game = {'name': g['shortName'], 'date': g['date'], 'league': 'ncaa', 
                             'hometeam': info['competitors'][0]['team']['abbreviation'], 'homeid': info['competitors'][0]['id'], 'homescore': int(info['competitors'][0]['score']),
                             'awayteam': info['competitors'][1]['team']['abbreviation'], 'awayid': info['competitors'][1]['id'], 'awayscore': int(info['competitors'][1]['score']),
@@ -78,12 +79,26 @@ def get_all_games():
                             game['spread'] = None
                         games.append(game)
                 if "mlb" in URL:
-                    if "Cincinnati Reds" in g['name'] or "Yankees" in g['name']:
+                    if "Cincinnati Reds" in g['name'] or "Minnesota Twins" in g['name']:
                         game = {'name': g['shortName'], 'date': g['date'], 'league': 'mlb',
                             'hometeam': info['competitors'][0]['team']['abbreviation'], 'homeid': info['competitors'][0]['id'], 'homescore': int(info['competitors'][0]['score']),
                             'awayteam': info['competitors'][1]['team']['abbreviation'], 'awayid': info['competitors'][1]['id'], 'awayscore': int(info['competitors'][1]['score']),
                             'quarter': info['status']['period'], 'balls': info.get('situation', {}).get('balls'), 'strikes': info.get('situation', {}).get('strikes'), 'outs': info.get('situation', {}).get('outs'),
                             'over': info['status']['type']['completed'],'state': info['status']['type']['state'], 'stateDetail': info['status']['type']['shortDetail']}
+                        if odds: 
+                            game['overUnder'] = odds.get('overUnder')
+                            game['spread'] = odds.get('spread')
+                        else:
+                            game['overUnder'] = None
+                            game['spread'] = None
+                        games.append(game)
+                if "nhl" in URL:
+                    if "asdf" in g['name']:
+                        game = {'name': g['shortName'], 'date': g['date'], 'league': 'nhl', 
+                            'hometeam': info['competitors'][0]['team']['abbreviation'], 'homeid': info['competitors'][0]['id'], 'homescore': int(info['competitors'][0]['score']),
+                            'awayteam': info['competitors'][1]['team']['abbreviation'], 'awayid': info['competitors'][1]['id'], 'awayscore': int(info['competitors'][1]['score']),
+                            'time': info['status']['displayClock'], 'quarter': info['status']['period'], 'over': info['status']['type']['completed'],
+                            'state': info['status']['type']['state'], 'stateDetail': info['status']['type']['shortDetail']}
                         if odds: 
                             game['overUnder'] = odds.get('overUnder')
                             game['spread'] = odds.get('spread')

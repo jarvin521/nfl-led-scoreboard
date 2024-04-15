@@ -19,8 +19,8 @@
 from PIL import Image
 from PIL import ImageDraw
 import time
-# from rgbmatrix import RGBMatrix, RGBMatrixOptions
-from RGBMatrixEmulator import RGBMatrix, RGBMatrixOptions
+from rgbmatrix import RGBMatrix, RGBMatrixOptions
+#from RGBMatrixEmulator import RGBMatrix, RGBMatrixOptions
 
 # Configuration for the matrix
 options = RGBMatrixOptions()

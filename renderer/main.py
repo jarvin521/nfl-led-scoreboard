@@ -1,9 +1,8 @@
 from PIL import Image, ImageFont, ImageDraw, ImageSequence
-#from rgbmatrix import graphics
-from RGBMatrixEmulator import RGBMatrix, RGBMatrixOptions, graphics
+from rgbmatrix import graphics
+#from RGBMatrixEmulator import RGBMatrix, RGBMatrixOptions, graphics
 from utils import center_text
 from calendar import month_abbr
-from renderer.screen_config import screenConfig
 from datetime import datetime, timedelta
 import time as t
 import debug
@@ -15,7 +14,6 @@ class MainRenderer:
     def __init__(self, matrix, data):
         self.matrix = matrix
         self.data = data
-        self.screen_config = screenConfig("64x32_config")
         self.canvas = matrix.CreateFrameCanvas()
         self.width = 64
         self.height = 64
@@ -90,8 +88,9 @@ class MainRenderer:
         # return True
 
     def __draw_game(self, game):
-        time = self.data.get_current_date()
-        gametime = datetime.strptime(game['date'], "%Y-%m-%dT%H:%MZ")
+        time = datetime.now()
+        gametime = datetime.strptime(game['date'], "%Y-%m-%dT%H:%MZ") # Mac
+        debug.info(game['name'])
         if time < gametime and game['state'] == 'pre':
             debug.info('Pre-Game State')
             self._draw_pregame(game)
@@ -105,16 +104,18 @@ class MainRenderer:
         else:
             debug.info('Live State, checking every 5s')
             self._draw_live_game(game)
-        debug.info('ping render_game')
+        #debug.info('ping render_game')
 
     def _draw_pregame(self, game):
-            time = self.data.get_current_date()
+            time = datetime.now()
             gamedatetime = self.data.get_gametime()
             if gamedatetime.day == time.day:
                 date_text = 'TODAY'
             else:
-                date_text = gamedatetime.strftime('%-m/%-d')  
-            gametime = gamedatetime.strftime("%-I:%M %p")
+                #date_text = gamedatetime.strftime('%-m/%-d') # Mac
+                date_text = gamedatetime.strftime('%#m/%#d')  # Windows
+            #gametime = gamedatetime.strftime("%-I:%M %p")  # Mac
+            gametime = gamedatetime.strftime("%#I:%M %#p")  # Windows
             
             # Center the game time on screen.                
             date_pos = center_text(self.font_mini.getbbox(date_text)[2], 32)
