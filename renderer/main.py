@@ -208,8 +208,8 @@ class MainRenderer:
         home_team_logo = Image.open('logos/{}/{}.png'.format(game['league'], game['hometeam'])).resize((16, 16), Image.BOX)
         
         # Put the images on the canvas
-        self.canvas.SetImage(away_team_logo.convert("RGB"), 2, 0)
-        self.canvas.SetImage(home_team_logo.convert("RGB"), 45, 0)
+        self.canvas.SetImage(away_team_logo.convert("RGB"), 2, 1)
+        self.canvas.SetImage(home_team_logo.convert("RGB"), 45, 1)
         
         # Load the canvas on screen.
         self.canvas = self.matrix.SwapOnVSync(self.canvas)
