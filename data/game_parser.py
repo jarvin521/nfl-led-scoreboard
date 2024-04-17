@@ -35,7 +35,7 @@ def get_all_games():
                             game['spread'] = None
                         games.append(game)
                 if "college-football" in URL: 
-                    if " " in g['name'] or "adsf" in g['name']:    
+                    if "Kentucky Wildcats" in g['name'] or "Minnesota Gophers" in g['name']:    
                         game = {'name': g['shortName'], 'date': g['date'], 'league': 'ncaa',
                             'hometeam': info['competitors'][0]['team']['abbreviation'], 'homeid': info['competitors'][0]['id'], 'homescore': int(info['competitors'][0]['score']),
                             'awayteam': info['competitors'][1]['team']['abbreviation'], 'awayid': info['competitors'][1]['id'], 'awayscore': int(info['competitors'][1]['score']),
