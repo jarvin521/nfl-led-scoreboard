@@ -189,6 +189,7 @@ class MainRenderer:
                 quarter_position = 25
             else:
                 quarter = f"B{game['quarter']}"
+                print(center_text(self.font.getbbox(quarter)[2], 32))
                 quarter_position = 26
             if not game['1b'] and not game['2b'] and not game['3b']:
                 bases = Image.open('logos/scoreboard/Bases_0.png').resize((20, 20), Image.BOX)
