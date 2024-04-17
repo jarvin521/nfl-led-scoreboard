@@ -185,8 +185,10 @@ class MainRenderer:
         if game['league'] == 'mlb':
             if "Top" in game['stateDetail']:
                 quarter = f"T{game['quarter']}"
+                quarter_position = 25
             else:
                 quarter = f"B{game['quarter']}"
+                quarter_position = 26
             if not game['1b'] and not game['2b'] and not game['3b']:
                 bases = Image.open('logos/scoreboard/Bases_0.png').resize((20, 20), Image.BOX)
             if game['1b'] and not game['2b'] and not game['3b']:
@@ -230,8 +232,7 @@ class MainRenderer:
             if game['outs'] == 2:
                 outs = Image.open('logos/scoreboard/Outs_2.png').resize((6, 3), Image.BOX)
             if game['outs'] == 3:
-                outs = Image.open('logos/scoreboard/Outs_2.png').resize((6, 3), Image.BOX) 
-            quarter_position = (self.font_mini.getbbox(quarter)[2], 32) 
+                outs = Image.open('logos/scoreboard/Outs_2.png').resize((6, 3), Image.BOX)  
         elif game['league'] == 'nfl' or game['league'] == 'ncaa':
             info_pos = center_text(self.font_mini.getbbox(pos)[2], 32)
             self.draw.multiline_text((info_pos, 13), pos, fill=pos_colour, font=self.font_mini, align="center")
