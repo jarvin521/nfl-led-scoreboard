@@ -112,10 +112,10 @@ class MainRenderer:
             if gamedatetime.day == time.day:
                 date_text = 'TODAY'
             else:
-                #date_text = gamedatetime.strftime('%-m/%-d') # Mac
-                date_text = gamedatetime.strftime('%#m/%#d')  # Windows
-            #gametime = gamedatetime.strftime("%-I:%M %p")  # Mac
-            gametime = gamedatetime.strftime("%#I:%M %#p")  # Windows
+                date_text = gamedatetime.strftime('%-m/%-d') # Mac
+                #date_text = gamedatetime.strftime('%#m/%#d')  # Windows
+            gametime = gamedatetime.strftime("%-I:%M %p")  # Mac
+            #gametime = gamedatetime.strftime("%#I:%M %#p")  # Windows
             
             # Center the game time on screen.                
             date_pos = center_text(self.font_mini.getbbox(date_text)[2], 32)
