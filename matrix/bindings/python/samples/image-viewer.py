@@ -2,8 +2,8 @@
 import time
 import sys
 
-from rgbmatrix import RGBMatrix, RGBMatrixOptions
-#from RGBMatrixEmulator import RGBMatrix, RGBMatrixOptions
+#from rgbmatrix import RGBMatrix, RGBMatrixOptions
+from RGBMatrixEmulator import RGBMatrix, RGBMatrixOptions
 from PIL import Image
 
 if len(sys.argv) < 2:

@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # Display a runtext with double-buffering.
 from samplebase import SampleBase
-# from rgbmatrix import graphics
-from RGBMatrixEmulator import RGBMatrix, RGBMatrixOptions, graphics
+from rgbmatrix import graphics
+#from RGBMatrixEmulator import RGBMatrix, RGBMatrixOptions, graphics
 import time
 
 

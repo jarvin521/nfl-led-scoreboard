@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from samplebase import SampleBase
-from rgbmatrix import graphics
-#from RGBMatrixEmulator import RGBMatrix, RGBMatrixOptions, grpahics
+#from rgbmatrix import graphics
+from RGBMatrixEmulator import RGBMatrix, RGBMatrixOptions, grpahics
 import time
 
 

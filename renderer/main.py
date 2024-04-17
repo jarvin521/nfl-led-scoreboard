@@ -1,6 +1,6 @@
 from PIL import Image, ImageFont, ImageDraw, ImageSequence
-from rgbmatrix import graphics
-#from RGBMatrixEmulator import RGBMatrix, RGBMatrixOptions, graphics
+#from rgbmatrix import graphics
+from RGBMatrixEmulator import RGBMatrix, RGBMatrixOptions, graphics
 from utils import center_text
 from calendar import month_abbr
 from datetime import datetime, timedelta
@@ -112,10 +112,10 @@ class MainRenderer:
             if gamedatetime.day == time.day:
                 date_text = 'TODAY'
             else:
-                date_text = gamedatetime.strftime('%-m/%-d') # Mac
-                #date_text = gamedatetime.strftime('%#m/%#d')  # Windows
-            gametime = gamedatetime.strftime("%-I:%M %p")  # Mac
-            #gametime = gamedatetime.strftime("%#I:%M %#p")  # Windows
+                #date_text = gamedatetime.strftime('%-m/%-d') # Mac
+                date_text = gamedatetime.strftime('%#m/%#d')  # Windows
+            #gametime = gamedatetime.strftime("%-I:%M %p")  # Mac
+            gametime = gamedatetime.strftime("%#I:%M %#p")  # Windows
             
             # Center the game time on screen.                
             date_pos = center_text(self.font_mini.getbbox(date_text)[2], 32)
@@ -149,6 +149,7 @@ class MainRenderer:
         print("home: ", homescore, "away: ", awayscore)
         # Refresh the data
         quarter = str(game['quarter']) # I'm using quarter but it works as half or period or inining
+        quarter_position = center_text(self.font.getbbox(quarter)[2], 32)
         if self.data.needs_refresh:
             debug.info('Refresh game overview')
             self.data.refresh_games()
@@ -182,20 +183,64 @@ class MainRenderer:
         awayscore = '{0:d}'.format(awayscore)
         home_score_size = self.font.getbbox(homescore)[2]
         if game['league'] == 'mlb':
-            balls = f"B {game['balls']}"
-            strikes = f"S {game['strikes']}"
-            outs = f"O {game['outs']}" 
-            self.draw.multiline_text((center_text(self.font_mini.getbbox(balls)[2], 32), 12), balls, fill=(255, 255, 255), font=self.font_mini, align="center")  
-            self.draw.multiline_text((center_text(self.font_mini.getbbox(strikes)[2], 32), 18), strikes, fill=(255, 255, 255), font=self.font_mini, align="center")
-            self.draw.multiline_text((center_text(self.font_mini.getbbox(outs)[2], 32), 24), outs, fill=(255, 255, 255), font=self.font_mini, align="center")
+            if "Top" in game['stateDetail']:
+                quarter = f"T{game['quarter']}"
+                quarter_position = 25
+            else:
+                quarter = f"B{game['quarter']}"
+                quarter_position = 26
+            if not game['1b'] and not game['2b'] and not game['3b']:
+                bases = Image.open('logos/scoreboard/Bases_0.png').resize((20, 20), Image.BOX)
+            if game['1b'] and not game['2b'] and not game['3b']:
+                bases = Image.open('logos/scoreboard/Bases_1.png').resize((20, 20), Image.BOX)
+            if not game['1b'] and game['2b'] and not game['3b']:
+                bases = Image.open('logos/scoreboard/Bases_2.png').resize((20, 20), Image.BOX)
+            if not game['1b'] and not game['2b'] and  game['3b']:
+                bases = Image.open('logos/scoreboard/Bases_2.png').resize((20, 20), Image.BOX)
+            if game['1b'] and game['2b'] and not game['3b']:
+                bases = Image.open('logos/scoreboard/Bases_12.png').resize((20, 20), Image.BOX)
+            if game['1b'] and not game['2b'] and game['3b']:
+                bases = Image.open('logos/scoreboard/Bases_13.png').resize((20, 20), Image.BOX)
+            if not game['1b'] and game['2b'] and game['3b']:
+                bases = Image.open('logos/scoreboard/Bases_23.png').resize((20, 20), Image.BOX)
+            if game['1b'] and game['2b'] and game['3b']:
+                bases = Image.open('logos/scoreboard/Bases_123.png').resize((20, 20), Image.BOX)
+            if game['1b'] and not game['2b'] and game['3b']:
+                bases = Image.open('logos/scoreboard/Bases_13.png').resize((20, 20), Image.BOX)
+            if game['balls'] == 0:
+                balls = Image.open('logos/scoreboard/Balls_0.png').resize((9, 3), Image.BOX)
+            if game['balls'] == 1:
+                balls = Image.open('logos/scoreboard/Balls_1.png').resize((9, 3), Image.BOX)
+            if game['balls'] == 2:
+                balls = Image.open('logos/scoreboard/Balls_2.png').resize((9, 3), Image.BOX)
+            if game['balls'] == 3:
+                balls = Image.open('logos/scoreboard/Balls_3.png').resize((9, 3), Image.BOX)
+            if game['balls'] == 4:
+                balls = Image.open('logos/scoreboard/Balls_3.png').resize((9, 3), Image.BOX)
+            if game['strikes'] == 0:
+                strikes = Image.open('logos/scoreboard/Strikes_0.png').resize((6, 3), Image.BOX)
+            if game['strikes'] == 1:
+                strikes = Image.open('logos/scoreboard/Strikes_1.png').resize((6, 3), Image.BOX)
+            if game['strikes'] == 2:
+                strikes = Image.open('logos/scoreboard/Strikes_2.png').resize((6, 3), Image.BOX)
+            if game['strikes'] == 3:
+                strikes = Image.open('logos/scoreboard/Strikes_2.png').resize((6, 3), Image.BOX)
+            if game['outs'] == 0:
+                outs = Image.open('logos/scoreboard/Outs_0.png').resize((6, 3), Image.BOX)
+            if game['outs'] == 1:
+                outs = Image.open('logos/scoreboard/Outs_1.png').resize((6, 3), Image.BOX)
+            if game['outs'] == 2:
+                outs = Image.open('logos/scoreboard/Outs_2.png').resize((6, 3), Image.BOX)
+            if game['outs'] == 3:
+                outs = Image.open('logos/scoreboard/Outs_2.png').resize((6, 3), Image.BOX)  
         elif game['league'] == 'nfl' or game['league'] == 'ncaa':
             info_pos = center_text(self.font_mini.getbbox(pos)[2], 32)
             self.draw.multiline_text((info_pos, 13), pos, fill=pos_colour, font=self.font_mini, align="center")
         else:
-            print("basketball game")
+            print("maybe more here")
         
         # score_position = center_text(self.font.getsize(score)[0], 32)
-        quarter_position = center_text(self.font.getbbox(quarter)[2], 32)     
+        # quarter_position = center_text(self.font_mini.getbbox(quarter)[2], 32)     
         self.draw.multiline_text((quarter_position, 0), quarter, fill=(255, 255, 255), font=self.font, align="center")
         self.draw.multiline_text((6, 19), awayscore, fill=(255, 255, 255), font=self.font, align="center")
         self.draw.multiline_text((59 - home_score_size, 19), homescore, fill=(255, 255, 255), font=self.font, align="center")
@@ -208,6 +253,10 @@ class MainRenderer:
         home_team_logo = Image.open('logos/{}/{}.png'.format(game['league'], game['hometeam'])).resize((16, 16), Image.BOX)
         
         # Put the images on the canvas
+        self.canvas.SetImage(bases.convert("RGB"), 21, 18)
+        self.canvas.SetImage(balls.convert("RGB"), 20, 15)
+        self.canvas.SetImage(strikes.convert("RGB"), 30, 15)
+        self.canvas.SetImage(outs.convert("RGB"), 37, 15)
         self.canvas.SetImage(away_team_logo.convert("RGB"), 2, 1)
         self.canvas.SetImage(home_team_logo.convert("RGB"), 45, 1)
         
