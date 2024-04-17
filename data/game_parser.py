@@ -35,7 +35,7 @@ def get_all_games():
                             game['spread'] = None
                         games.append(game)
                 if "college-football" in URL: 
-                    if "adfads" in g['name'] or "adf Gophers" in g['name']:    
+                    if "Kentucky Wildcats" in g['name'] or "adsf" in g['name']:    
                         game = {'name': g['shortName'], 'date': g['date'], 'league': 'ncaa',
                             'hometeam': info['competitors'][0]['team']['abbreviation'], 'homeid': info['competitors'][0]['id'], 'homescore': int(info['competitors'][0]['score']),
                             'awayteam': info['competitors'][1]['team']['abbreviation'], 'awayid': info['competitors'][1]['id'], 'awayscore': int(info['competitors'][1]['score']),
@@ -51,7 +51,7 @@ def get_all_games():
                             game['spread'] = None
                         games.append(game)
                 if "nba" in URL:
-                    if "adsf" in g['name']:                       
+                    if " " in g['name']:                       
                         game = {'name': g['shortName'], 'date': g['date'], 'league': 'nba',
                             'hometeam': info['competitors'][0]['team']['abbreviation'], 'homeid': info['competitors'][0]['id'], 'homescore': int(info['competitors'][0]['score']),
                             'awayteam': info['competitors'][1]['team']['abbreviation'], 'awayid': info['competitors'][1]['id'], 'awayscore': int(info['competitors'][1]['score']),
@@ -79,7 +79,7 @@ def get_all_games():
                             game['spread'] = None
                         games.append(game)
                 if "mlb" in URL:
-                    if "adf" in g['name'] or "Astros" in g['name']:
+                    if "Reds" in g['name'] or " " in g['name']:
                         game = {'name': g['shortName'], 'date': g['date'], 'league': 'mlb',
                             'hometeam': info['competitors'][0]['team']['abbreviation'], 'homeid': info['competitors'][0]['id'], 'homescore': int(info['competitors'][0]['score']),
                             'awayteam': info['competitors'][1]['team']['abbreviation'], 'awayid': info['competitors'][1]['id'], 'awayscore': int(info['competitors'][1]['score']),
