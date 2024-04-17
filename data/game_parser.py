@@ -79,7 +79,7 @@ def get_all_games():
                             game['spread'] = None
                         games.append(game)
                 if "mlb" in URL:
-                    if "Reds" in g['name'] or " " in g['name']:
+                    if "adf" in g['name'] or "Astros " in g['name']:
                         game = {'name': g['shortName'], 'date': g['date'], 'league': 'mlb',
                             'hometeam': info['competitors'][0]['team']['abbreviation'], 'homeid': info['competitors'][0]['id'], 'homescore': int(info['competitors'][0]['score']),
                             'awayteam': info['competitors'][1]['team']['abbreviation'], 'awayid': info['competitors'][1]['id'], 'awayscore': int(info['competitors'][1]['score']),
