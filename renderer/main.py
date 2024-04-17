@@ -185,6 +185,7 @@ class MainRenderer:
         if game['league'] == 'mlb':
             if "Top" in game['stateDetail']:
                 quarter = f"T{game['quarter']}"
+                print(center_text(self.font.getbbox(quarter)[2], 32))
                 quarter_position = 25
             else:
                 quarter = f"B{game['quarter']}"
