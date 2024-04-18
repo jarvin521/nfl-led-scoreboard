@@ -104,7 +104,7 @@ class MainRenderer:
         else:
             debug.info('Live State, checking every 5s')
             if game['league'] == 'mlb':
-                self._draw_live_mlb
+                self._draw_live_mlb(game)
             else:
                 self._draw_live_game(game)
         #debug.info('ping render_game')
