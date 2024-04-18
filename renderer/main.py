@@ -128,6 +128,8 @@ class MainRenderer:
             self.draw.text((date_pos, 0), date_text, font=self.font_mini)
             self.draw.multiline_text((gametime_pos, 6), gametime, fill=(255, 255, 255), font=self.font_mini, align="center")
             self.draw.text((25, 15), 'VS', font=self.font)
+            self.draw.text((12, 18), f"o/u{game['overUnder']}", font=self.font_mini)
+            self.draw.text((44, 18), str(game['overUnder']), font=self.font_mini)
             
             # Put the data on the canvas
             self.canvas.SetImage(self.image, 0, 0)
