@@ -231,7 +231,7 @@ class MainRenderer:
         home_team_logo = Image.open('logos/{}/{}.png'.format(game['league'], game['hometeam'])).resize((16, 16), Image.BOX)
         
         # Put the image on the canvas
-        self.canvas.SetImage(bases.convert("RGB"), 20, 16)
+        self.canvas.SetImage(bases.convert("RGB"), 18, 17)
         self.canvas.SetImage(balls.convert("RGB"), 20, 15)
         self.canvas.SetImage(strikes.convert("RGB"), 30, 15)
         self.canvas.SetImage(outs.convert("RGB"), 37, 15)
