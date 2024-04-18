@@ -160,25 +160,25 @@ class MainRenderer:
             quarter_position = 26
         # Image for the bases; could definitely be better code here    
         if not game['1b'] and not game['2b'] and not game['3b']:
-            bases = Image.open('logos/scoreboard/Bases_0.png').resize((28, 21), Image.BOX)
+            bases = Image.open('logos/scoreboard/Bases_0.png').resize((32, 24), Image.BOX)
         elif game['1b'] and not game['2b'] and not game['3b']:
-            bases = Image.open('logos/scoreboard/Bases_1.png').resize((28, 21), Image.BOX)
+            bases = Image.open('logos/scoreboard/Bases_1.png').resize((32, 24), Image.BOX)
         elif not game['1b'] and game['2b'] and not game['3b']:
-            bases = Image.open('logos/scoreboard/Bases_2.png').resize((28, 21), Image.BOX)
+            bases = Image.open('logos/scoreboard/Bases_2.png').resize((32, 24), Image.BOX)
         elif not game['1b'] and not game['2b'] and  game['3b']:
-            bases = Image.open('logos/scoreboard/Bases_2.png').resize((28, 21), Image.BOX)
+            bases = Image.open('logos/scoreboard/Bases_2.png').resize((32, 24), Image.BOX)
         elif game['1b'] and game['2b'] and not game['3b']:
-            bases = Image.open('logos/scoreboard/Bases_12.png').resize((28, 21), Image.BOX)
+            bases = Image.open('logos/scoreboard/Bases_12.png').resize((32, 24), Image.BOX)
         elif game['1b'] and not game['2b'] and game['3b']:
-            bases = Image.open('logos/scoreboard/Bases_13.png').resize((28, 21), Image.BOX)
+            bases = Image.open('logos/scoreboard/Bases_13.png').resize((32, 24), Image.BOX)
         elif not game['1b'] and game['2b'] and game['3b']:
-            bases = Image.open('logos/scoreboard/Bases_23.png').resize((28, 21), Image.BOX)
+            bases = Image.open('logos/scoreboard/Bases_23.png').resize((32, 24), Image.BOX)
         elif game['1b'] and game['2b'] and game['3b']:
-            bases = Image.open('logos/scoreboard/Bases_123.png').resize((28, 21), Image.BOX)
+            bases = Image.open('logos/scoreboard/Bases_123.png').resize((32, 24), Image.BOX)
         elif game['1b'] and not game['2b'] and game['3b']:
-            bases = Image.open('logos/scoreboard/Bases_13.png').resize((28, 21), Image.BOX)
+            bases = Image.open('logos/scoreboard/Bases_13.png').resize((32, 24), Image.BOX)
         else:
-            bases = Image.open('logos/scoreboard/Bases_0.png').resize((28, 21), Image.BOX)
+            bases = Image.open('logos/scoreboard/Bases_0.png').resize((32, 24), Image.BOX)
         # Image for the count
         if game['balls'] == 0:
             balls = Image.open('logos/scoreboard/Balls_0.png').resize((9, 3), Image.BOX)
