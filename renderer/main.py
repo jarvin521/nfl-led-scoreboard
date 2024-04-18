@@ -189,58 +189,66 @@ class MainRenderer:
             else:
                 quarter = f"B{game['quarter']}"
                 quarter_position = 26
+            # Image for the bases; could definitely be better code here    
             if not game['1b'] and not game['2b'] and not game['3b']:
                 bases = Image.open('logos/scoreboard/Bases_0.png').resize((20, 20), Image.BOX)
-            if game['1b'] and not game['2b'] and not game['3b']:
+            elif game['1b'] and not game['2b'] and not game['3b']:
                 bases = Image.open('logos/scoreboard/Bases_1.png').resize((20, 20), Image.BOX)
-            if not game['1b'] and game['2b'] and not game['3b']:
+            elif not game['1b'] and game['2b'] and not game['3b']:
                 bases = Image.open('logos/scoreboard/Bases_2.png').resize((20, 20), Image.BOX)
-            if not game['1b'] and not game['2b'] and  game['3b']:
+            elif not game['1b'] and not game['2b'] and  game['3b']:
                 bases = Image.open('logos/scoreboard/Bases_2.png').resize((20, 20), Image.BOX)
-            if game['1b'] and game['2b'] and not game['3b']:
+            elif game['1b'] and game['2b'] and not game['3b']:
                 bases = Image.open('logos/scoreboard/Bases_12.png').resize((20, 20), Image.BOX)
-            if game['1b'] and not game['2b'] and game['3b']:
+            elif game['1b'] and not game['2b'] and game['3b']:
                 bases = Image.open('logos/scoreboard/Bases_13.png').resize((20, 20), Image.BOX)
-            if not game['1b'] and game['2b'] and game['3b']:
+            elif not game['1b'] and game['2b'] and game['3b']:
                 bases = Image.open('logos/scoreboard/Bases_23.png').resize((20, 20), Image.BOX)
-            if game['1b'] and game['2b'] and game['3b']:
+            elif game['1b'] and game['2b'] and game['3b']:
                 bases = Image.open('logos/scoreboard/Bases_123.png').resize((20, 20), Image.BOX)
-            if game['1b'] and not game['2b'] and game['3b']:
+            elif game['1b'] and not game['2b'] and game['3b']:
                 bases = Image.open('logos/scoreboard/Bases_13.png').resize((20, 20), Image.BOX)
+            else:
+                bases = Image.open('logos/scoreboard/Bases_0.png').resize((20, 20), Image.BOX)
+            # Image for the count
             if game['balls'] == 0:
                 balls = Image.open('logos/scoreboard/Balls_0.png').resize((9, 3), Image.BOX)
-            if game['balls'] == 1:
+            elif game['balls'] == 1:
                 balls = Image.open('logos/scoreboard/Balls_1.png').resize((9, 3), Image.BOX)
-            if game['balls'] == 2:
+            elif game['balls'] == 2:
                 balls = Image.open('logos/scoreboard/Balls_2.png').resize((9, 3), Image.BOX)
-            if game['balls'] == 3:
+            elif game['balls'] == 3:
                 balls = Image.open('logos/scoreboard/Balls_3.png').resize((9, 3), Image.BOX)
-            if game['balls'] == 4:
+            elif game['balls'] == 4:
                 balls = Image.open('logos/scoreboard/Balls_3.png').resize((9, 3), Image.BOX)
+            else:
+                balls = Image.open('logos/scoreboard/Balls_0.png').resize((9, 3), Image.BOX)
             if game['strikes'] == 0:
                 strikes = Image.open('logos/scoreboard/Strikes_0.png').resize((6, 3), Image.BOX)
-            if game['strikes'] == 1:
+            elif game['strikes'] == 1:
                 strikes = Image.open('logos/scoreboard/Strikes_1.png').resize((6, 3), Image.BOX)
-            if game['strikes'] == 2:
+            elif game['strikes'] == 2:
                 strikes = Image.open('logos/scoreboard/Strikes_2.png').resize((6, 3), Image.BOX)
-            if game['strikes'] == 3:
+            elif game['strikes'] == 3:
                 strikes = Image.open('logos/scoreboard/Strikes_2.png').resize((6, 3), Image.BOX)
+            else:
+                strikes = Image.open('logos/scoreboard/Strikes_0.png').resize((9, 3), Image.BOX)
             if game['outs'] == 0:
                 outs = Image.open('logos/scoreboard/Outs_0.png').resize((6, 3), Image.BOX)
-            if game['outs'] == 1:
+            elif game['outs'] == 1:
                 outs = Image.open('logos/scoreboard/Outs_1.png').resize((6, 3), Image.BOX)
-            if game['outs'] == 2:
+            elif game['outs'] == 2:
                 outs = Image.open('logos/scoreboard/Outs_2.png').resize((6, 3), Image.BOX)
-            if game['outs'] == 3:
-                outs = Image.open('logos/scoreboard/Outs_2.png').resize((6, 3), Image.BOX)  
+            elif game['outs'] == 3:
+                outs = Image.open('logos/scoreboard/Outs_2.png').resize((6, 3), Image.BOX) 
+            else:
+                outs = Image.open('logos/scoreboard/Outs_0.png').resize((6, 3), Image.BOX)
         elif game['league'] == 'nfl' or game['league'] == 'ncaa':
             info_pos = center_text(self.font_mini.getbbox(pos)[2], 32)
             self.draw.multiline_text((info_pos, 13), pos, fill=pos_colour, font=self.font_mini, align="center")
         else:
             print("maybe more here")
-        
-        # score_position = center_text(self.font.getsize(score)[0], 32)
-        # quarter_position = center_text(self.font_mini.getbbox(quarter)[2], 32)     
+            
         self.draw.multiline_text((quarter_position, 0), quarter, fill=(255, 255, 255), font=self.font, align="center")
         self.draw.multiline_text((6, 19), awayscore, fill=(255, 255, 255), font=self.font, align="center")
         self.draw.multiline_text((59 - home_score_size, 19), homescore, fill=(255, 255, 255), font=self.font, align="center")
