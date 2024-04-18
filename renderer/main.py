@@ -23,6 +23,7 @@ class MainRenderer:
         # Load the fonts
         self.font = ImageFont.truetype("fonts/score_large.otf", 16)
         self.font_mini = ImageFont.truetype("fonts/04B_03B_.TTF", 8)
+        self.font_micro = ImageFont.truetype("fonts/04B_03B_.TTF", 4)
 
     def render(self):
         while True:
@@ -345,9 +346,9 @@ class MainRenderer:
         score_position = center_text(self.font.getbbox(score)[2], 32)
         # Draw the text on the Data image.
         self.draw.multiline_text((score_position, 19), score, fill=(255, 255, 255), font=self.font, align="center")
-        self.draw.text((12, 18), f"o/u{game['overUnder']}", font=self.font_mini)
-        self.draw.text((44, 18), str(game['spread']), font=self.font_mini)
-        
+        self.draw.text((8, 18), f"o/u{game['overUnder']}", font=self.font_micro)
+        self.draw.text((50, 18), str(game['spread']), font=self.font_micro)
+
         # Put the data on the canvas
         self.canvas.SetImage(self.image, 0, 0)
 
