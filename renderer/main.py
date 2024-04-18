@@ -338,7 +338,7 @@ class MainRenderer:
         self.draw = ImageDraw.Draw(self.image)
 
     def _draw_post_game(self, game):
-        self.draw.multiline_text((21, 3), "FINAL", fill=(255, 255, 255), font=self.font_mini,align="center")
+        self.draw.multiline_text((21, 1), "FINAL", fill=(255, 255, 255), font=self.font_mini,align="center")
         score = '{}-{}'.format(game['awayscore'], game['homescore'])
         # Set the position of the information on screen.
         score_position = center_text(self.font.getbbox(score)[2], 32)
@@ -353,8 +353,8 @@ class MainRenderer:
         home_team_logo = Image.open('logos/{}/{}.png'.format(game['league'], game['hometeam'])).resize((16, 16), Image.BOX)
         
         # Put the images on the canvas
-        self.canvas.SetImage(away_team_logo.convert("RGB"), 2, 6)
-        self.canvas.SetImage(home_team_logo.convert("RGB"), 45, 6)
+        self.canvas.SetImage(away_team_logo.convert("RGB"), 2, 3)
+        self.canvas.SetImage(home_team_logo.convert("RGB"), 45, 3)
 
         # Load the canvas on screen.
         self.canvas = self.matrix.SwapOnVSync(self.canvas)
