@@ -243,6 +243,11 @@ class MainRenderer:
                 outs = Image.open('logos/scoreboard/Outs_2.png').resize((6, 3), Image.BOX) 
             else:
                 outs = Image.open('logos/scoreboard/Outs_0.png').resize((6, 3), Image.BOX)
+            # Put the image on the canvas
+            self.canvas.SetImage(bases.convert("RGB"), 21, 18)
+            self.canvas.SetImage(balls.convert("RGB"), 20, 15)
+            self.canvas.SetImage(strikes.convert("RGB"), 30, 15)
+            self.canvas.SetImage(outs.convert("RGB"), 37, 15)
         elif game['league'] == 'nfl' or game['league'] == 'ncaa':
             info_pos = center_text(self.font_mini.getbbox(pos)[2], 32)
             self.draw.multiline_text((info_pos, 13), pos, fill=pos_colour, font=self.font_mini, align="center")
@@ -261,10 +266,6 @@ class MainRenderer:
         home_team_logo = Image.open('logos/{}/{}.png'.format(game['league'], game['hometeam'])).resize((16, 16), Image.BOX)
         
         # Put the images on the canvas
-        self.canvas.SetImage(bases.convert("RGB"), 21, 18)
-        self.canvas.SetImage(balls.convert("RGB"), 20, 15)
-        self.canvas.SetImage(strikes.convert("RGB"), 30, 15)
-        self.canvas.SetImage(outs.convert("RGB"), 37, 15)
         self.canvas.SetImage(away_team_logo.convert("RGB"), 2, 1)
         self.canvas.SetImage(home_team_logo.convert("RGB"), 45, 1)
         
