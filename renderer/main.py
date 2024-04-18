@@ -150,7 +150,6 @@ class MainRenderer:
     def _draw_live_mlb(self, game):
         homescore = game['homescore']
         awayscore = game['awayscore']
-        home_score_size = self.font.getbbox(homescore)[2]
         print("home: ", homescore, "away: ", awayscore)
 
         if "Top" in game['stateDetail']:
@@ -214,6 +213,11 @@ class MainRenderer:
         else:
             outs = Image.open('logos/scoreboard/Outs_0.png').resize((6, 3), Image.BOX)
         
+        # Set the position of the information on screen.
+        homescore = '{0:d}'.format(homescore)
+        awayscore = '{0:d}'.format(awayscore)
+        home_score_size = self.font.getbbox(homescore)[2]
+
         # Write the score
         self.draw.multiline_text((quarter_position, 0), quarter, fill=(255, 255, 255), font=self.font, align="center")
         self.draw.multiline_text((6, 19), awayscore, fill=(255, 255, 255), font=self.font, align="center")
