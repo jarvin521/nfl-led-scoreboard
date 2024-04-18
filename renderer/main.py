@@ -148,8 +148,8 @@ class MainRenderer:
             self.draw = ImageDraw.Draw(self.image)
     
     def _draw_live_mlb(self, game):
-        homescore = '{0:d}'.format(homescore)
-        awayscore = '{0:d}'.format(awayscore)
+        homescore = game['homescore']
+        awayscore = game['awayscore']
         home_score_size = self.font.getbbox(homescore)[2]
         print("home: ", homescore, "away: ", awayscore)
 
@@ -214,14 +214,6 @@ class MainRenderer:
         else:
             outs = Image.open('logos/scoreboard/Outs_0.png').resize((6, 3), Image.BOX)
         
-        # Put the image on the canvas
-        self.canvas.SetImage(bases.convert("RGB"), 21, 18)
-        self.canvas.SetImage(balls.convert("RGB"), 20, 15)
-        self.canvas.SetImage(strikes.convert("RGB"), 30, 15)
-        self.canvas.SetImage(outs.convert("RGB"), 37, 15)
-        self.canvas.SetImage(away_team_logo.convert("RGB"), 2, 1)
-        self.canvas.SetImage(home_team_logo.convert("RGB"), 45, 1)
-        
         # Write the score
         self.draw.multiline_text((quarter_position, 0), quarter, fill=(255, 255, 255), font=self.font, align="center")
         self.draw.multiline_text((6, 19), awayscore, fill=(255, 255, 255), font=self.font, align="center")
@@ -234,6 +226,14 @@ class MainRenderer:
         away_team_logo = Image.open('logos/{}/{}.png'.format(game['league'], game['awayteam'])).resize((16, 16), Image.BOX)
         home_team_logo = Image.open('logos/{}/{}.png'.format(game['league'], game['hometeam'])).resize((16, 16), Image.BOX)
         
+        # Put the image on the canvas
+        self.canvas.SetImage(bases.convert("RGB"), 21, 18)
+        self.canvas.SetImage(balls.convert("RGB"), 20, 15)
+        self.canvas.SetImage(strikes.convert("RGB"), 30, 15)
+        self.canvas.SetImage(outs.convert("RGB"), 37, 15)
+        self.canvas.SetImage(away_team_logo.convert("RGB"), 2, 1)
+        self.canvas.SetImage(home_team_logo.convert("RGB"), 45, 1)
+
         # Load the canvas on screen.
         self.canvas = self.matrix.SwapOnVSync(self.canvas)
         
