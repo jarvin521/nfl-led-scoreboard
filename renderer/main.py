@@ -129,8 +129,6 @@ class MainRenderer:
             self.draw.text((date_pos, 0), date_text, font=self.font_mini)
             self.draw.multiline_text((gametime_pos, 6), gametime, fill=(255, 255, 255), font=self.font_mini, align="center")
             self.draw.text((25, 15), 'VS', font=self.font)
-            self.draw.text((12, 18), f"o/u{game['overUnder']}", font=self.font_mini)
-            self.draw.text((44, 18), str(game['spread']), font=self.font_mini)
             
             # Put the data on the canvas
             self.canvas.SetImage(self.image, 0, 0)
@@ -340,14 +338,12 @@ class MainRenderer:
         self.draw = ImageDraw.Draw(self.image)
 
     def _draw_post_game(self, game):
-        self.draw.multiline_text((21, 0), "FINAL", fill=(255, 255, 255), font=self.font_mini,align="center")
+        self.draw.multiline_text((21, 3), "FINAL", fill=(255, 255, 255), font=self.font_mini,align="center")
         score = '{}-{}'.format(game['awayscore'], game['homescore'])
         # Set the position of the information on screen.
         score_position = center_text(self.font.getbbox(score)[2], 32)
         # Draw the text on the Data image.
         self.draw.multiline_text((score_position, 19), score, fill=(255, 255, 255), font=self.font, align="center")
-        self.draw.text((8, 18), f"o/u{game['overUnder']}", font=self.font_micro)
-        self.draw.text((50, 18), str(game['spread']), font=self.font_micro)
 
         # Put the data on the canvas
         self.canvas.SetImage(self.image, 0, 0)
@@ -357,8 +353,8 @@ class MainRenderer:
         home_team_logo = Image.open('logos/{}/{}.png'.format(game['league'], game['hometeam'])).resize((16, 16), Image.BOX)
         
         # Put the images on the canvas
-        self.canvas.SetImage(away_team_logo.convert("RGB"), 2, 2)
-        self.canvas.SetImage(home_team_logo.convert("RGB"), 45, 2)
+        self.canvas.SetImage(away_team_logo.convert("RGB"), 2, 6)
+        self.canvas.SetImage(home_team_logo.convert("RGB"), 45, 6)
 
         # Load the canvas on screen.
         self.canvas = self.matrix.SwapOnVSync(self.canvas)
