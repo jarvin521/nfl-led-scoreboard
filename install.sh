@@ -18,10 +18,3 @@ sudo pip install pytz tzlocal requests
 make
 echo "If you didn't see any errors above, everything should be installed!"
 echo "Installation complete! Play around with the examples in matrix/bindings/python/samples to make sure your matrix is working."
-
-pip install rgbmatrix
-pip install RGBMatrixEmulator
-pip install requests
-pip install json
-pip install tzlocal
-pip install pytz

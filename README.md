@@ -1,42 +1,38 @@
-# nfl-led-scoreboard
-![I promise to change this picture when I actually build my own](imgs/scoreboard.jpg)
+# all-sport-scoreboard
 
-Display your favourite NFL team score on an raspberry pi powered LED matrix. Currently supports 64x32 boards only.
+Display your favorite team's scores on an raspberry pi powered LED matrix. Currently the code has NFL, MLB, NBA, NHL, NCAA Football and Basketball. Currently supports 64x32 boards only.
 
 ### Credit and inpsiration
-This project and my [Fantasy Football scoreboard project](https://github.com/mikemountain/fantasy-football-scoreboard) were inspired by the [nhl-led-scoreboard](https://github.com/riffnshred/nhl-led-scoreboard), who based THEIR project off of the [mlb-led-scoreboard](https://github.com/MLB-LED-Scoreboard/mlb-led-scoreboard). Go check them out, and start watching hockey if you don't already (and baseball too but I love hockey more (go Leafs!)).
+I got an ad on social media for a small LED scoreboard and thought it was pretty neat but was turned off by their high price tag. Then I started Googling DIY versions and low and behold there were a lot of them! I forked [nfl-led-scoreboard](https://github.com/mikemountain/nfl-led-scoreboard) and took its code base and started making updates. Looks like he was inspired by the [nhl-led-scoreboard](https://github.com/riffnshred/nhl-led-scoreboard), who based THEIR project off of the [mlb-led-scoreboard](https://github.com/MLB-LED-Scoreboard/mlb-led-scoreboard). So go check them out too if you want a specific sport, but this one supports many.
 
-### Donate
-<a href="https://paypal.me/themikemountain/"><img src="https://github.com/andreostrovsky/donate-with-paypal/blob/master/dark.svg" height="40"></a>  
-If you enjoyed this project, my NFL project, or if you're just feeling generous, consider buying me a beer. Cheers! :beers: 
-You can also PM me on reddit under /u/mikemountain if you need help but don't think it requires an issue!
+## Displays
 
-## Features (v0.1.0)
+### Logos
+I followed this [guide](https://learn.adafruit.com/led-matrix-sports-scoreboard/prep-the-team-logos) to collect all the team's logos.  I updated their script a little bit to not "reprocess" the files to small .bmp files. I kept them as 500x500 .png files.
 
-### GAME ROTATION
-Hey, neat-o! You can rotate through multiple games now if you want to! Will still need some finessing, but definitely an improvement.
+I had trouble collecting the NCAA teams though because the ESPN API limited its response to 50 teams. I tried (not too hard) to add pagination to my request call but was unsuccessful so I wrote a small PowerShell [script](./ncaa.ps1) to collect team names and their IDs. I added them to a JSON [blob](./ncaa.json) to loop through to collect their logos with this [script](./ncaa_logos.py).
 
 ### Pregame
 Currently shows the team logos and the game time. ![pregame](imgs/pregame.jpg)
 
 ### Live scoring updates 
-The score updates every 3 seconds. The scoreboard will display, from top to bottom: quarter, time remaining in quarter, team with possession, down and yards to gain, and the position of the line of scrimmage. ![scoreboard](imgs/scoreboard.jpg) When a team is in the redzone, their name will light up red. ![rz](imgs/rz.jpg)
+The score updates every 3 seconds.
+- MLB games include the team's logos, the count with red, green, and blue dots, and the bases indicate runners on. [mlb-image]()
+- NBA, NCAA Basketball, NHL games display the team's logos, scores, time and period. [basketball-image]()
+- NFL and NCAA Football should do what MikeMountain's scoreboard does, but being that we're not in season I haven't been able to validate it yet.  Coming this fall!
 
 ### Postgame
 Just kind of looks like the pre-game screen but with the final scores. ![final score](imgs/postgame.jpg)
 
-### Off season
-It displays a message that it's the off season. You should just turn it off and plan to be heartbroken again next year.
-
-### Preseason
-Nothing yet because I didn't even think the season would start because of COVID.
+### Postponed
+Mostly for MLB, but I added a PPD display with a rain cloud for when games are postponed.
 
 ## Roadmap
 
 Future plans include:
-* team colours for the score/possession maybe?
-* better/more gifs I guess?
-* general stability? I actually achieved all the goals I set out to do with this thing so I dunno what else I wanna do.
+* Updating the config.json to include Fav Teams from all sports.
+* better logic in some places especially around the MLB count and bases.
+- I'm not a programmer, I know some basic coding practices to get this thing cobbled together so feel free to put PRs out there to optimize the code.
 
 ## Installation
 ### Hardware Assembly
@@ -45,7 +41,7 @@ The [mlb-led-scoreboard guys made a great wiki page to cover the hardware part o
 ### Software Installation
 #### Raspbian Distribution
 It is recommended you install the Lite version of Raspbian from the [Raspbian Downloads Page](https://www.raspberrypi.org/downloads/raspbian/). This version lacks a GUI, allowing your Pi to dedicate more system resources to drawing the screen.
-Make sure to set the timezone to your local timezone!
+**Make sure to set the timezone to your local timezone!**
 
 #### Requirements
 You need Git for cloning this repo and PIP for installing the scoreboard software.
@@ -55,13 +51,20 @@ sudo apt-get install git python-pip
 ```
 
 #### Installing the software
-This installation process might take some time because it will install all the dependencies listed below.
+You can probably use the include install.sh like MountainMike does, but it wasn't working for me so I walked through his script manually and ended up doing the following to get things to work.
 
 ```
 git clone --recursive https://github.com/mikemountain/nfl-led-scoreboard
-cd nfl-led-scoreboard/
-sudo chmod +x install.sh
-sudo ./install.sh
+git clone https://github.com/hzeller/rpi-rgb-led-matrix.git matrix
+cd matrix
+make build-python
+apt-get install python3-pip
+pip install rgbmatrix
+pip install RGBMatrixEmulator
+pip install requests
+pip install json
+pip install tzlocal
+pip install pytz
 ```
 [rpi-rgb-led-matrix](https://github.com/hzeller/rpi-rgb-led-matrix/tree/master/bindings/python#building): The open-source library that allows the Raspberry Pi to render on the LED matrix.
 
@@ -73,11 +76,15 @@ If you have used a LED matrix on a raspberry pi before and know how to run it pr
 If you just bought your LED matrix and want to run this software right away, reference the [rpi-rgb-led-matrix library](https://github.com/hzeller/rpi-rgb-led-matrix/). Check out the section that uses the python bindings and run some of their examples on your screen. For sure you will face some issues at first, but don't worry, more than likely there's a solution you can find in their troubleshooting section.
 Once you found out how to make it run smoothly, come back here and do what's next.
 
+Before my LED Matrix was delivered I did some testing with the `RGBMatrixEmulator`[module](https://github.com/ty-porter/RGBMatrixEmulator).  This allowed me to write and test code that just popped a window on my laptop and displayed an digital LED matrix.  It was super helpful, so thank you ty-porter for that!
+
 ### Adafruit HAT/bonnet
 If you are using any thing from raspberry pi 3+ to the newest versions with an Adafruit HAT or Bonnet, here's what [RiffnShred](https://github.com/riffnshred) did to run his board properly. It seems these are more recommendations than things you 100% absolutely need to do, but are probably beneficial anyway.
 
-* Do the hardware mod found in the [Improving flicker section ](https://github.com/hzeller/rpi-rgb-led-matrix#improving-flicker).
-* Disable the on-board sound. You can find how to do it from the [Troubleshooting sections](https://github.com/hzeller/rpi-rgb-led-matrix#troubleshooting)
+I'm using a raspberry pi 2 model 3 with a USB wifi adapter. I bought the Adafruit Hat and LED Matrix listed in the howchoo "What You'll Need" section. I bought a 4mm pitch matrix, however.
+
+* Do the hardware mod found in the [Improving flicker section ](https://github.com/hzeller/rpi-rgb-led-matrix#improving-flicker). This made a huge difference for me, highly recommend it!
+* Disable the on-board sound. You can find how to do it from the [Troubleshooting sections](https://github.com/hzeller/rpi-rgb-led-matrix#troubleshooting). I don't think you have a choice with this anymore.  My scoreboard wouldn't start and returned an error stating the on-board sound was still enabled. (Sorry, I should've grabbed a pic of this but didn't. Just follow the steps above.)
 * From the same section, run the command that remove the bluetooth firmware, unless you use any bluetooth device with your pi.
 
 Finally, here's the command he used.
@@ -86,9 +93,7 @@ sudo python main.py --led-gpio-mapping=adafruit-hat-pwm --led-brightness=60 --le
 ```
 
 ## Usage
-Open the config.json file from the root folder and change these values:
-
-* ```fav_team``` Set this as your favourite team, but it doesn't do anything yet (for next season)
+Open `/data/game_parser.py` and in the main fuction there are a bunch of loops and if statements. Add your favorite teams in the corresponding sports loop.  Just add a space `" "` to collect all teams. I'm hopefully going to improve this section soon!
 
 Now, in a terminal, cd to the nfl-led-scoreboard folder and run this command. 
 ```
@@ -96,7 +101,7 @@ sudo python main.py
 ```
 **If you run your screen on an Adafruit HAT or Bonnet, you need to supply this flag.**
 ```
-sudo python main.py --led-gpio-mapping=adafruit-hat
+sudo python main.py --led-gpio-mapping=adafruit-hat-pwm --led-brightness=20 --led-slowdown-gpio=4
 ```
 
 ### Flags
